@@ -57,9 +57,10 @@ include_once('header.php');
         <h1>Category Management</h1>
         <a href="Category_create.php" class="btn btn-success mt-2 mb-5">Create New Category</a>
         <div class="row">
-          <div class="col-10">
-            <?php if($result): ?> 
-              <?php foreach($result as $cate):?> 
+            <?php if($result) {
+               foreach($result as $cate) {
+            ?> 
+              <div class="col-md-4">
                 <div class="card">
                   <div class="card-header bg-light">
                     <h3 class=""><?php echo $cate['name'] ?></h3>
@@ -67,31 +68,35 @@ include_once('header.php');
                   </div>
                   <div class="card-body">
                     <p class="text-muted">Description</p>
-                    <p class="card-text"><?php echo $cate['description'];?></p>
+                    <p class="card-text"><?php echo substr($cate['description'], 0 , 100);?></p>
                     <a href="edit_cate.php?id=<?php echo $cate['id'];?>" class="btn btn-info">Edit</a>
                     <a href="delete_cate.php?id=<?php echo $cate['id']; ?>" class="btn btn-danger" onclick="return confirm('Do you want to delete <?php echo $cate['name']; ?>');">Delete</a>
                   </div>
                 </div>
-              <?php endforeach; ?>
-            <?php endif; ?>
-            <ul class="pagination justify-content-end mt-3">
-                      <li class="page-item"> <a href="?pageno=1" class="page-link">First</a></li>
-                      <li class="page-item <?php if($pageno <= 1){echo "disabled";} ?>"> 
-                        <a href="<?php if($pageno <= 1){echo "disabled";}else{ echo "?pageno=".($pageno-1);}?>" class="page-link">
-                          Previous
-                        </a>
-                      </li>
-                      <li class="page-item"> <a href="" class="page-link"><?php echo escape($pageno); ?></a></li>
-                      <li class="page-item <?php if($pageno >= $totalpage){echo "disabled";} ?>">
-                        <a 
-                          href="<?php if($pageno >= $totalpage){echo "disabled";}else{echo "?pageno=".($pageno+1);}?>" class="page-link">
-                        Next</a>
-                      </li>
-                      <li class="page-item"><a href="?pageno=<?php echo $totalpage; ?>" class="page-link">End</a></li>
-                    </ul>
+            </div>
+            <?php 
+              }  
+            }
+              ?>
+          
           </div>
         </div>
         <!-- /.row -->
+          <ul class="pagination justify-content-center mt-3">
+                <li class="page-item"> <a href="?pageno=1" class="page-link">First</a></li>
+                <li class="page-item <?php if($pageno <= 1){echo "disabled";} ?>"> 
+                  <a href="<?php if($pageno <= 1){echo "disabled";}else{ echo "?pageno=".($pageno-1);}?>" class="page-link">
+                    Previous
+                  </a>
+                </li>
+                <li class="page-item"> <a href="" class="page-link"><?php echo escape($pageno); ?></a></li>
+                <li class="page-item <?php if($pageno >= $totalpage){echo "disabled";} ?>">
+                  <a 
+                    href="<?php if($pageno >= $totalpage){echo "disabled";}else{echo "?pageno=".($pageno+1);}?>" class="page-link">
+                  Next</a>
+                </li>
+                <li class="page-item"><a href="?pageno=<?php echo $totalpage; ?>" class="page-link">End</a></li>
+          </ul>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

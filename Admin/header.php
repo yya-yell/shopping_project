@@ -32,19 +32,21 @@
     $page_link = explode('/' , $page);
     $page_link = end($page_link);
 ?>
+  <?php if($page_link != 'sale_order.php' && $page_link != 'sale_order_detail.php'): ?>
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3" 
-    action="<?php echo $page_link == 'index.php' ? 'index.php' : $page_link ?>" method="post">
-    <input name="_token" type="hidden" value="<?php echo empty($_SESSION['_token']) ? '' : $_SESSION['_token']; ?>">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name="search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
+      action="<?php echo $page_link == 'index.php' ? 'index.php' : $page_link ?>" method="post">
+      <input name="_token" type="hidden" value="<?php echo empty($_SESSION['_token']) ? '' : $_SESSION['_token']; ?>">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name="search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
-      </div>
     </form>
+  <?php endif; ?>
     
   </nav>
   <!-- /.navbar -->
@@ -93,6 +95,14 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Category Maganement
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/Admin/sale_order.php" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Orders
               </p>
             </a>
           </li>
