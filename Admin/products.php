@@ -3,11 +3,9 @@ session_start();
 require_once("../config/config.php");
 require_once("../config/common.php");
 if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
-  header("location:login.php");
-}
+  header("location:/Admin/login.php");}
 if($_SESSION['role'] != 1){
-  header("location: login.php");
-}
+  header("location:/Admin/login.php");}
 if (!empty($_POST['search'])) {
   setcookie('search', $_POST['search'], time() + (86400 * 30), "/"); 
 } else {

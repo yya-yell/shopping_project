@@ -4,11 +4,9 @@
   require_once("../config/common.php");
 
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
-    header("location:login.php");
-  }
+    header("location:/Admin/login.php");  }
   if($_SESSION['role'] != 1){
-    header("location: login.php");
-  }
+    header("location:/Admin/login.php");  }
   if($_POST) {
     if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['address']) || empty($_POST['phone'])){
       if(empty($_POST['name'])){

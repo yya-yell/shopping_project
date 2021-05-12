@@ -3,18 +3,27 @@
 	require_once("config/config.php");
 	require_once("config/common.php");
 	if($_POST){
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$stat = $pdo->prepare("SELECT * FROM users WHERE email=:email");
-		$stat->execute([':email'=>$email]);
-		$user = $stat->fetch(PDO::FETCH_ASSOC);
-		if(password_verify($password, $user['password'])){
-			$_SESSION['user_id'] = $user['id'];
-			$_SESSION['name'] = $user['name'];
-			header('location:index.php');
-		}else {
-			echo "<script>alert('something wrong i can feel it')</script>";
-		}
+		if(empty($_POST['email']) || empty($_POST['password'])){
+			if(empty($_POST['email'])){
+				$emailErr = "Email can not be blank";
+			}
+			if(empty($_POST['password'])){
+				$passwordErr = "Password can not be blank";
+			}
+		}else{
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			$stat = $pdo->prepare("SELECT * FROM users WHERE email=:email");
+			$stat->execute([':email'=>$email]);
+			$user = $stat->fetch(PDO::FETCH_ASSOC);
+			if(password_verify($password, $user['password'])){
+				$_SESSION['user_id'] = $user['id'];
+				$_SESSION['name'] = $user['name'];
+				header('location:index.php');
+			}else {
+				echo "<script>alert('something wrong i can feel it')</script>";
+			}
+		}	
 	}
 
 ?>
@@ -102,12 +111,13 @@
 						<form class="row login_form" action="login.php" method="post" id="contactForm" novalidate="novalidate">
 							<input name="_token" type="hidden" value="<?php echo empty($_SESSION['_token']) ? '' : $_SESSION['_token']; ?>">
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="name" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<input type="email" class="form-control <?php echo empty($emailErr) ? "" : "border border-danger";  ?>" id="name" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<?php echo  empty($emailErr) ? "" : "<p class='text-danger text-left display-6' >".$emailErr."</p>";  ?>
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="password" class="form-control <?php echo empty($passwordErr) ? "" : "border border-danger";  ?>" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							</div>
-						
+							<?php echo  empty($passwordErr) ? "" : "<p class='text-danger text-left display-6' >".$passwordErr."</p>";  ?>
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="primary-btn">Log In</button>
 							</div>

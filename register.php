@@ -140,7 +140,7 @@
 							<!-- Email -->
 							<div class="col-md-12 form-group">
 								<input type="email" class="form-control <?php echo empty($emailErr) ? '' : 'border border-danger'?>" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
-								<?php echo empty($nameErr) ? "" : "<p class='text-danger text-left display-6'>". $emailErr ."</p>"; ?>
+								<?php echo empty($emailErr) ? "" : "<p class='text-danger text-left display-6'>". $emailErr ."</p>"; ?>
 							</div>
 							<!-- password -->
 							<div class="col-md-12 form-group">

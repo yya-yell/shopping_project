@@ -32,7 +32,7 @@
     $page_link = explode('/' , $page);
     $page_link = end($page_link);
 ?>
-  <?php if($page_link != 'sale_order.php' && $page_link != 'sale_order_detail.php'): ?>
+ <?php if($page_link == 'index.php' || $page_link == 'products.php' || $page_link == 'Category_mana.php'): ?>
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3" 
       action="<?php echo $page_link == 'index.php' ? 'index.php' : $page_link ?>" method="post">
