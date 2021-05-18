@@ -1,4 +1,5 @@
 <?php 	
+
 	if (!empty($_POST['search'])) {
 	setcookie('search', $_POST['search'], time() + (86400 * 30), "/"); 
 	} else {
@@ -8,6 +9,9 @@
 		}
 	}
 	include('header.php');
+	if(empty($_SESSION['user_id'])){
+		header('location:login.php');
+	}
 
 	
 	if(!empty($_GET['cat_id'])){
@@ -18,23 +22,23 @@
 	} else {
 	$pageno = 1;
 	}
-	$numofRec = 1;
+	$numofRec = 3;
 	$offset = ($pageno - 1) * $numofRec;
 	if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 		if(empty($catProduct)){
-			$statement = $pdo->prepare("SELECT * FROM `products` ORDER BY id DESC");
+			$statement = $pdo->prepare("SELECT * FROM `products` WHERE quantity > 0 ORDER BY id DESC");
 			$statement->execute();
 			$result = $statement->fetchAll();
 			$totalpage = ceil(count($result) / $numofRec);
-			$statement = $pdo->prepare("SELECT * FROM `products` ORDER BY id DESC LIMIT $offset , $numofRec");
+			$statement = $pdo->prepare("SELECT * FROM `products` WHERE quantity > 0 ORDER BY id DESC LIMIT $offset , $numofRec");
 			$statement->execute();
 			$products = $statement->fetchAll();
 		}else{
-			$statement = $pdo->prepare("SELECT * FROM `products` WHERE  category_id = :cat_id");
+			$statement = $pdo->prepare("SELECT * FROM `products` WHERE  category_id = :cat_id AND quantity > 0");
 			$statement->execute([":cat_id" => $catProduct]);
 			$result = $statement->fetchAll();
 			$totalpage = ceil(count($result) / $numofRec);
-			$statement = $pdo->prepare("SELECT * FROM `products` WHERE  category_id = :cat_id LIMIT $offset , $numofRec");
+			$statement = $pdo->prepare("SELECT * FROM `products` WHERE  category_id = :cat_id AND quantity > 0 LIMIT $offset , $numofRec");
 			$statement->execute([':cat_id' => $catProduct]);
 			$products = $statement->fetchAll();
 		}
@@ -46,11 +50,11 @@
 			  $search = $_COOKIE['search'];
 			}
 		  }
-		$statement = $pdo->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' ORDER BY id DESC");
+		$statement = $pdo->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' AND quantity > 0 ORDER BY id DESC");
 		$statement->execute();
 		$result = $statement->fetchAll();
 		$totalpage = ceil(count($result) / $numofRec);
-		$statement = $pdo->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' ORDER BY id DESC LIMIT $offset , $numofRec");
+		$statement = $pdo->prepare("SELECT * FROM `products` WHERE `name` LIKE '%$search%' AND quantity > 0 ORDER BY id DESC LIMIT $offset , $numofRec");
 		$statement->execute();
 		$products = $statement->fetchAll(); 
 
@@ -104,21 +108,29 @@
 						<!-- single product -->
 					<div class="col-lg-4 col-md-6">
 						<div class="single-product">
-							<img class="img-fluid" src="Admin/images/<?= $pValue['image'];?>" alt="">
+							<a href="product_detail.php?id=<?= $pValue['id'];?>"><img class="img-fluid" src="Admin/images/<?= $pValue['image'];?>" alt=""></a>
 							<div class="product-details">
 								<h6><?= $pValue['name'];?></h6>
 								<div class="price">
 									<h6><?= $pValue['price'];?>ကျပ်</h6>
 								</div>
 								<div class="prd-bottom">
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="product_detail.php?id=<?= $pValue['id']; ?>" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
+									<form action="addTocart.php" method="post">
+										<input name="_token" type="hidden" value="<?php echo empty($_SESSION['_token']) ? '' : $_SESSION['_token']; ?>">
+										<input name="id" type="hidden" value="<?=$pValue['id'] ; ?>">
+										<input name="qty" type="hidden" value="1">
+
+											<div class="social-info" >
+												<button class="social-info" style="display: contents;">
+													<span class="ti-bag"></span>
+													<p class="hover-text" style="left: 20px;">add to bag</p>
+												</button>
+											</div>
+											<a href="product_detail.php?id=<?= $pValue['id']; ?>" class="social-info">
+												<span class="lnr lnr-move"></span>
+												<p class="hover-text">view more</p>
+											</a>
+									</form>
 								</div>
 							</div>
 						</div>

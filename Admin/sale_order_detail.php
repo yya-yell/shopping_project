@@ -1,29 +1,29 @@
-<?php
-session_start();
-require_once("../config/config.php");
-require_once("../config/common.php");
-if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
-  header("location:/Admin/login.php");}
-if($_SESSION['role'] != 1){
-  header("location:/Admin/login.php");}
+  <?php
+  session_start();
+  require_once("../config/config.php");
+  require_once("../config/common.php");
+  if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
+    header("location:/Admin/login.php");}
+  if($_SESSION['role'] != 1){
+    header("location:/Admin/login.php");}
 
-include_once('header.php');
-if (!empty($_GET['pageno'])) {
-  $pageno = $_GET['pageno'];
-} else {
-  $pageno = 1;
-}
-$numofRec = 3;
-$offset = ($pageno - 1) * $numofRec;
-  $statement = $pdo->prepare("SELECT * FROM `sale_order_detail` WHERE id=:id");
-  $statement->execute([':id'=>$_GET['id']]);
-  $result = $statement->fetchAll();
-  $totalpage = ceil(count($result) / $numofRec);
-  $statement = $pdo->prepare("SELECT * FROM `sale_order_detail` WHERE id=:id LIMIT $offset , $numofRec");
-  $statement->execute([':id'=>$_GET['id']]);
-  $order_detail = $statement->fetchAll();
- 
-?>
+  include_once('header.php');
+  if (!empty($_GET['pageno'])) {
+    $pageno = $_GET['pageno'];
+  } else {
+    $pageno = 1;
+  }
+  $numofRec = 3;
+  $offset = ($pageno - 1) * $numofRec;
+    $statement = $pdo->prepare("SELECT * FROM `sale_order_detail` WHERE sale_order_id=:id");
+    $statement->execute([':id'=>$_GET['id']]);
+    $result = $statement->fetchAll();
+    $totalpage = ceil(count($result) / $numofRec);
+    $statement = $pdo->prepare("SELECT * FROM `sale_order_detail` WHERE sale_order_id=:id LIMIT $offset , $numofRec");
+    $statement->execute([':id'=>$_GET['id']]);
+    $order_detail = $statement->fetchAll();
+  
+  ?>
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
@@ -39,9 +39,9 @@ $offset = ($pageno - 1) * $numofRec;
                   <thead>                  
                     <tr>
                       <th style="width: 10px">#</th>
-                      <th>ပစည်း နာမည်</th>
-                      <th>အရေအတွက်</th>
-                      <th>မှာခဲ့သည့် အချိန်</th>
+                      <th>Producsts</th>
+                      <th>Quantity</th>
+                      <th>time</th>
                       <th style="width: 200px">Action</th>
                     </tr>
                   </thead>
@@ -58,7 +58,7 @@ $offset = ($pageno - 1) * $numofRec;
                     <tr>
                       <td><?php echo $i; ?></td>
                       <td><?php echo escape($nameResult[0]['name']); ?></td>
-                      <td><?php echo escape($detail_values['quantity']); ?><span class="text-danger"> ခု</span></td>
+                      <td><?php echo escape($detail_values['quantity']); ?><span class="text-danger"></span></td>
                       <td><?php echo escape($detail_values['order_date']); ?></td>
                       <td>
                         <a href="sale_order.php" class="btn btn-warning btn-md mr-3">back</a>

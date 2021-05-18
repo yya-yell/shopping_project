@@ -2,6 +2,9 @@
 	session_start();
 	include('config/config.php');
 	include('config/common.php');
+	if(empty($_SESSION['name'])){
+		header('location:login.php');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -42,7 +45,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.html"><h4>AP Shopping<h4></a>
+					<a class="navbar-brand logo_h" href="index.php"><h4>AP Shopping<h4></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -52,7 +55,24 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<?php 
+								$cart = 0;
+								if(isset($_SESSION['cart'])){
+									foreach($_SESSION['cart'] as $key => $val){
+										$cart += $val;	
+									}
+								}
+							
+							?>
+							<li class="nav-item">
+								<a href="cart.php" class="cart">
+									<span class="ti-bag"></span>
+								<?php if ($cart > 0): ?>
+									<span class="badge-pill badge-warning text-white"><?= $cart; ?></span>
+								<?php endif; ?>
+								</a>
+							</li>
+							
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
@@ -75,12 +95,15 @@
 	<!-- End Header Area -->
 
 	<!-- Start Banner Area -->
-	<section class="banner-area organic-breadcrumb">
+	<section class="banner-area organic-breadcrumb" style="margin-bottom: 25px;">
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
 					<h1>Welcome</h1>
-
+					<?php if(!empty($_SESSION['name'])): ?>
+					<h4 class="text-white"><?= ucwords($_SESSION['name']); ?></h4>
+					<a href="logout.php" class="primary-btn text-dark mt-2" style="line-height: 25px; background: white; border-radius: 10px;">LOGOUT</a>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
