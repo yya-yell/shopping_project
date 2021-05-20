@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -105,6 +107,41 @@
                 Orders
               </p>
             </a>
+          </li>
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Report Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="weeklyReport.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Weekly Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="montlyRp.php" class="nav-link active" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Montly Page</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="royalCus.php" class="nav-link active" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Royal Customer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="bestSeller.php" class="nav-link active" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Best Seller items</p>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>

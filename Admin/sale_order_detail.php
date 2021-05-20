@@ -72,21 +72,21 @@
                   ?>
                 </table>
                   <ul class="pagination justify-content-end mt-3">
-                    <li class="page-itam"><a class="page-link" href="?pageno=1">First</a></li>
+                    <li class="page-itam"><a class="page-link" href="?id=<?=$_GET['id'];?>&pageno=1">First</a></li>
                     <li class="page-item <?php if($pageno <= 1){echo "disabled";}?>">
                       <a class="page-link" 
-                        href="<?php if($pageno <= 1){echo "disabled";}else{echo "?pageno=".($pageno-1);}?>">
+                        href="<?php if($pageno <= 1){echo "disabled";}else{echo "?id=".$_GET['id']."&pageno=".($pageno-1);}?>">
                         Previous
                       </a>
                     </li>
                     <li class="page-item"><a class="page-link" href=""><?php echo escape($pageno); ?></a></li>
                     <li class="page-item <?php if($pageno >= $totalpage){echo "disabled";} ?>">
                       <a class="page-link" 
-                        href="<?php if($pageno >= $totalpage){echo "disabled";}else{echo "?pageno=".($pageno+1);} ?>">
+                        href="<?php if($pageno >= $totalpage){echo "disabled";}else{echo "?id=".$_GET['id']. "&pageno=".($pageno+1);} ?>">
                         Next
                       </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="?pageno=<?php echo $totalpage; ?>">End</a></li>
+                    <li class="page-item"><a class="page-link" href="?id=<?=$_GET['id'];?>&pageno=<?php echo $totalpage; ?>">End</a></li>
                   </ul>
               </div>
               <!-- /.card-body -->

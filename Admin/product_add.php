@@ -33,6 +33,13 @@ if($_POST){
         if(empty($_FILES['image']['name'])){
             $imageErr = "Product image cannot be empty";
         }
+    }else if(!is_numeric($_POST['qty']) || !is_numeric($_POST['price'])){
+        if(!is_numeric($_POST['qty'])) {
+            $qtyErr = "Quantity cannot be text";
+        }
+        if(!is_numeric($_POST['price'])) {
+            $priceErr = "Price cannot text";
+        }
     } else { //validation success
         $img_pick = "images/" . $_FILES['image']['name'];
         $img_type = pathinfo($img_pick , PATHINFO_EXTENSION);
@@ -97,12 +104,12 @@ if($_POST){
                 <!-- quantity -->
                     <div class="form-group">
                         <label for="">Quantity</label><small class="text-danger d-flex justify-content-end"><?php echo empty($qtyErr) ? "" : "*" . $qtyErr; ?></small>
-                        <input type="text" name="qty" class="form-control" id="">
+                        <input type="number" name="qty" class="form-control" id="">
                     </div>
                 <!-- price -->
                     <div class="form-group">
                         <label for="">Price MMK</label><small class="text-danger d-flex justify-content-end"><?php echo empty($priceErr) ? "" : "*" . $priceErr; ?></small>
-                        <input type="text" name="price" class="form-control" id="">
+                        <input type="number" name="price" class="form-control" id="">
                     </div>
                 <!-- image -->
                     <div class="form-group">
